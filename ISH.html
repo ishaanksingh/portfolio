@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ishflix – Product & Consulting Shows</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg-main: #05060b;
+      --bg-elevated: #11131b;
+      --accent: #e50914;
+      --accent-soft: #ff3366;
+      --accent-secondary: #3b82f6;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --card-radius: 1rem;
+      --transition-fast: 0.2s ease-out;
+      --max-width: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #131525 0, #05060b 50%);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: linear-gradient(
+        to bottom,
+        rgba(5, 6, 11, 0.95),
+        rgba(5, 6, 11, 0.75),
+        transparent
+      );
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      margin-left: 2rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      position: relative;
+      padding-bottom: 0.1rem;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(
+        to right,
+        var(--accent),
+        var(--accent-secondary)
+      );
+      transition: width var(--transition-fast);
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-cta {
+      border-radius: 999px;
+      border: 1px solid rgba(249, 250, 251, 0.2);
+      padding: 0.4rem 0.85rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--text-muted);
+      cursor: pointer;
+      background: transparent;
+      transition: background var(--transition-fast),
+        color var(--transition-fast), border-color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .nav-cta.primary {
+      background: linear-gradient(120deg, var(--accent), var(--accent-soft));
+      border: none;
+      color: white;
+      font-weight: 600;
+    }
+
+    .nav-cta:hover {
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    .nav-cta.primary:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    /* MAIN LAYOUT */
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1.25rem 1.25rem 3rem;
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.3fr);
+      gap: 2rem;
+      margin-top: 1rem;
+      margin-bottom: 2.5rem;
+      padding: 1.5rem;
+      border-radius: 1.25rem;
+      background: radial-gradient(
+          circle at top left,
+          rgba(59, 130, 246, 0.3),
+          transparent 50%
+        ),
+        radial-gradient(
+          circle at bottom right,
+          rgba(229, 9, 20, 0.3),
+          transparent 60%
+        ),
+        linear-gradient(135deg, #020617, #020617);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      box-shadow: 0 35px 80px rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+    }
+
+    .hero-meta {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+      line-height: 1.1;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 34rem;
+      margin-bottom: 1rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .pill {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border-radius: 999px;
+      padding: 0.25rem 0.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .hero-cta-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 0.6rem 1.3rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform var(--transition-fast),
+        box-shadow var(--transition-fast), filter var(--transition-fast),
+        background var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      color: #f9fafb;
+      box-shadow: 0 10px 25px rgba(220, 38, 38, 0.5);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px) scale(1.02);
+    }
+
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--text-muted);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 1);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    .hero-footnote {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .hero-art {
+      border-radius: 1rem;
+      background: radial-gradient(circle at top, #1f2937, #020617 70%);
+      position: relative;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .hero-badge {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-tagline {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-mini {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .hero-chip {
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 0.75rem;
+      padding: 0.55rem 0.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .hero-chip span {
+      display: block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    /* SECTIONS */
+    .section {
+      margin-bottom: 2.25rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .section-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .card-row {
+      display: flex;
+      gap: 0.9rem;
+      overflow-x: auto;
+      padding-bottom: 0.3rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(148, 163, 184, 0.6) transparent;
+    }
+
+    .card-row::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .card-row::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .card-row::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.6);
+      border-radius: 999px;
+    }
+
+    .show-card {
+      min-width: 210px;
+      max-width: 210px;
+      background: radial-gradient(
+          circle at top left,
+          rgba(52, 211, 153, 0.12),
+          transparent 60%
+        ),
+        linear-gradient(145deg, rgba(15, 23, 42, 0.95), #020617);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      cursor: pointer;
+      transition: transform var(--transition-fast),
+        box-shadow var(--transition-fast), border-color var(--transition-fast),
+        background var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .show-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.9);
+      border-color: rgba(248, 250, 252, 0.7);
+      background: radial-gradient(
+          circle at top,
+          rgba(239, 68, 68, 0.18),
+          transparent 55%
+        ),
+        linear-gradient(145deg, rgba(15, 23, 42, 0.98), #020617);
+    }
+
+    /* POSTERS */
+    .card-poster {
+      position: relative;
+      height: 160px;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.9);
+      display: flex;
+      align-items: flex-end;
+      padding: 0.75rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(249, 250, 251, 0.9);
+      overflow: hidden;
+      background: radial-gradient(circle at bottom, #111827, #020617 70%);
+    }
+
+    .card-poster-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+      filter: brightness(0.7) saturate(1.2);
+      z-index: 0;
+    }
+
+    .card-poster::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(15, 23, 42, 0.96),
+        rgba(15, 23, 42, 0.2)
+      );
+      z-index: 1;
+    }
+
+    .card-poster-label {
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-body {
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    /* hidden details until hover */
+    .card-body-extra {
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transform: translateY(6px);
+      transition: opacity var(--transition-fast),
+        transform var(--transition-fast),
+        max-height var(--transition-fast);
+    }
+
+    .show-card:hover .card-body-extra {
+      opacity: 1;
+      max-height: 220px; /* enough for description+tags+cta */
+      transform: translateY(0);
+    }
+
+    .card-description {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      margin-top: 0.25rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      padding: 0.2rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-muted);
+    }
+
+    .card-cta {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* PERSONAS */
+    .personas {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .persona-card {
+      background: radial-gradient(
+          circle at top left,
+          rgba(59, 130, 246, 0.15),
+          transparent 60%
+        ),
+        linear-gradient(145deg, rgba(15, 23, 42, 0.95), #020617);
+      border-radius: 1.1rem;
+      padding: 1rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .persona-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+    }
+
+    .persona-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .persona-description {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .persona-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0.4rem 0 0.6rem;
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--text-muted);
+    }
+
+    .persona-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* ABOUT & CONTACT */
+    #about,
+    #contact {
+      background: radial-gradient(
+          circle at top right,
+          rgba(56, 189, 248, 0.12),
+          transparent 60%
+        ),
+        rgba(15, 23, 42, 0.85);
+      border-radius: 1.25rem;
+      padding: 1.25rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      margin-bottom: 1.75rem;
+    }
+
+    .about-title,
+    .contact-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .about-body {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .career-seasons {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.6rem;
+      font-size: 0.8rem;
+    }
+
+    .season-card {
+      background: rgba(2, 6, 23, 0.95);
+      border-radius: 0.75rem;
+      padding: 0.6rem 0.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+
+    .season-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .season-desc {
+      font-size: 0.78rem;
+    }
+
+    .contact-body {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .contact-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .contact-form-full {
+      grid-column: span 2;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.78rem;
+    }
+
+    .field label {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: 0.6rem;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 0.55rem 0.7rem;
+      color: var(--text-main);
+      font-size: 0.82rem;
+      resize: vertical;
+      min-height: 2.2rem;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      outline: none;
+      border-color: var(--accent-secondary);
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.6);
+    }
+
+    .contact-actions {
+      margin-top: 0.5rem;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 1rem 0 0.5rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* MODAL (FAKE SIGN-IN) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .modal {
+      background: #020617;
+      border-radius: 1rem;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 1.25rem;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.95);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .modal-title {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .modal-body {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .modal-persona-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .persona-btn {
+      border-radius: 0.75rem;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.92);
+      color: var(--text-main);
+      font-size: 0.82rem;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background var(--transition-fast),
+        transform var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .persona-btn span:first-child {
+      font-weight: 600;
+    }
+
+    .persona-btn:hover {
+      background: rgba(15, 23, 42, 1);
+      border-color: var(--accent-secondary);
+      transform: translateY(-1px);
+    }
+
+    .modal-note {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .career-seasons {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .nav-inner {
+        padding-inline: 1rem;
+      }
+      main {
+        padding-inline: 1rem;
+      }
+      .hero {
+        padding: 1.1rem;
+      }
+      .hero-title {
+        font-size: 1.6rem;
+      }
+      .personas {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .career-seasons {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .contact-form {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .contact-form-full {
+        grid-column: auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .show-card {
+        min-width: 180px;
+        max-width: 180px;
+      }
+      .hero-cta-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="logo">Ishflix</div>
+      <nav class="nav-links">
+        <a href="#hero">Home</a>
+        <a href="#product-shows">Product Shows</a>
+        <a href="#consulting-shows">Consulting Originals</a>
+        <a href="#personas">Who It's For</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <button class="nav-cta" data-open-modal>Sign In</button>
+        <button class="nav-cta primary" data-scroll-to="#contact">
+          Book a Season
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div>
+        <div class="hero-meta">Ishank Presents • Portfolio & Consulting</div>
+        <h1 class="hero-title">The Roadmap Architect</h1>
+        <p class="hero-subtitle">
+          A cinematic tour through my product builds & consulting case studies —
+          framed as binge-worthy shows for founders, teams, and product nerds.
+        </p>
+
+        <div class="pill-row">
+          <div class="pill">Product Strategy</div>
+          <div class="pill">UX & Experiments</div>
+          <div class="pill">Consulting Case Studies</div>
+          <div class="pill">Founder-Friendly</div>
+        </div>
+
+        <div class="hero-cta-row">
+          <button class="btn btn-primary" data-scroll-to="#product-shows">
+            ▶ Watch Product Blockbusters
+          </button>
+          <button class="btn btn-ghost" data-scroll-to="#consulting-shows">
+            View Consulting Originals
+          </button>
+        </div>
+
+        <p class="hero-footnote">
+          Think of Ishflix as my own streaming universe of builds, bets, and
+          business outcomes.
+        </p>
+      </div>
+      <aside class="hero-art">
+        <div>
+          <div class="hero-badge">Featured Show • Flagship Case Study</div>
+          <div class="hero-tagline">
+            “The Roadmap Architect” – 40% faster delivery, same team.
+          </div>
+          <div class="hero-mini">
+            How a messy backlog turned into a sharp, story-driven roadmap that
+            teams could finally align on.
+          </div>
+        </div>
+
+        <div class="hero-grid">
+          <div class="hero-chip">
+            <span>Season Runtime</span>
+            12 weeks from chaos → clarity.
+          </div>
+          <div class="hero-chip">
+            <span>Impact</span>
+            +40% roadmap throughput, fewer fire drills.
+          </div>
+          <div class="hero-chip">
+            <span>Starring</span>
+            Discovery, prioritisation, ruthless focus.
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- PRODUCT BLOCKBUSTERS -->
+    <section class="section" id="product-shows">
+      <div class="section-header">
+        <h2 class="section-title">Product Blockbusters</h2>
+        <p class="section-subtitle">My most replayed product builds & UX work.</p>
+      </div>
+
+      <div class="card-row">
+        <!-- MVP Heist -->
+        <article class="show-card">
+          <div class="card-poster">
+            <img
+              src="https://static.wixstatic.com/media/742af7_80bf9cdf9b57476586dc5730895cbbc4~mv2.png"
+              alt="MVP Heist Poster"
+              class="card-poster-img"
+            >
+            <span class="card-poster-label">Original • Product Series</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">The MVP Heist</h3>
+            <div class="card-body-extra">
+              <p class="card-description">
+                How a scrappy MVP hit product–market signals in 6 weeks instead
+                of 6 months.
+              </p>
+              <div class="card-tags">
+                <span class="tag">MVP</span>
+                <span class="tag">Rapid Prototyping</span>
+                <span class="tag">UX</span>
+              </div>
+              <div class="card-cta">View Case Study ▸</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Dashboard Reborn -->
+        <article class="show-card">
+          <div class="card-poster">
+            <img
+              src="https://static.wixstatic.com/media/742af7_4582e60f2ca845aba47d806e0d390639~mv2.png"
+              alt="Dashboard Reborn Poster"
+              class="card-poster-img"
+            >
+            <span class="card-poster-label">Remaster • UX Edition</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Dashboard Reborn</h3>
+            <div class="card-body-extra">
+              <p class="card-description">
+                Redesigning a dense analytics dashboard into a calm, insight-first
+                experience.
+              </p>
+              <div class="card-tags">
+                <span class="tag">UI/UX</span>
+                <span class="tag">Data Viz</span>
+                <span class="tag">B2B SaaS</span>
+              </div>
+              <div class="card-cta">View Case Study ▸</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Conversion Lab -->
+        <article class="show-card">
+          <div class="card-poster">
+            <img
+              src="https://static.wixstatic.com/media/742af7_2fc0aa31f8db42309e04fb8ba530fe36~mv2.png"
+              alt="The Conversion Lab Poster"
+              class="card-poster-img"
+            >
+            <span class="card-poster-label">Limited Series • Experiments</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">The Conversion Lab</h3>
+            <div class="card-body-extra">
+              <p class="card-description">
+                Funnel surgery, A/B tests, and experiments that lifted conversions
+                by 27%.
+              </p>
+              <div class="card-tags">
+                <span class="tag">Growth</span>
+                <span class="tag">Experimentation</span>
+                <span class="tag">CRO</span>
+              </div>
+              <div class="card-cta">Watch Breakdown ▸</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Extra Product Show -->
+        <article class="show-card">
+          <div class="card-poster">
+            <img
+              src="https://static.wixstatic.com/media/742af7_80bf9cdf9b57476586dc5730895cbbc4~mv2.png"
+              alt="Signal Hunters Poster"
+              class="card-poster-img"
+            >
+            <span class="card-poster-label">Pilot • Product Discovery</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Signal Hunters</h3>
+            <div class="card-body-extra">
+              <p class="card-description">
+                Talking to users, slicing data, and finding the one insight worth
+                building around.
+              </p>
+              <div class="card-tags">
+                <span class="tag">User Research</span>
+                <span class="tag">Discovery</span>
+              </div>
+              <div class="card-cta">View Case Study ▸</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONSULTING ORIGINALS -->
+    <section class="section" id="consulting-shows">
+      <div class="section-header">
+        <h2 class="section-title">Consulting Originals</h2>
+        <p class="section-subtitle">
+          Founder stories, strategy arcs, and measurable endings.
+        </p>
+      </div>
+
+      <div class="card-row">
+        <!-- Founder Whisperer -->
+        <article class="show-card">
+          <div class="card-poster">
+            <img
+              src="https://static.wixstatic.com/media/742af7_4582e60f2ca845aba47d806e0d390639~mv2.png"
+              alt="Founder Whisperer Poster"
+              class="card-poster-img"
+            >
+            <span class="card-poster-label">Original • Founder Story</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Founder Whisperer</h3>
+            <div class="card-body-extra">
+              <p class="card-description">
+                Turning a vague product idea into a sharp strategy and GTM story
+                investors actually remember.
+              </p>
+              <div class="card-tags">
+                <span class="tag">Strategy</span>
+                <span class="tag">Positioning</span>
+                <span class="tag">Narrative</span>
+              </div>
+              <div class="card-cta">Watch Strategy Breakdown ▸</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Scaling Season 2 -->
+        <article class="show-card">
+          <div class="card-poster">
+            <img
+              src="https://static.wixstatic.com/media/742af7_2fc0aa31f8db42309e04fb8ba530fe36~mv2.png"
+              alt="Scaling Season 2 Poster"
+              class="card-poster-img"
+            >
+            <span class="card-poster-label">Season 2 • Scaling</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Scaling Season 2</h3>
+            <div class="card-body-extra">
+              <p class="card-description">
+                Helping a team outgrow “hero mode” and ship with systems instead
+                of stress.
+              </p>
+              <div class="card-tags">
+                <span class="tag">Ops</span>
+                <span class="tag">Team Design</span>
+                <span class="tag">Leadership</span>
+              </div>
+              <div class="card-cta">View Case Study ▸</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Retention Resurrection -->
+        <article class="show-card">
+          <div class="card-poster">
+            <img
+              src="https://static.wixstatic.com/media/742af7_80bf9cdf9b57476586dc5730895cbbc4~mv2.png"
+              alt="Retention Resurrection Poster"
+              class="card-poster-img"
+            >
+            <span class="card-poster-label">Original • Retention Arc</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">The Retention Resurrection</h3>
+            <div class="card-body-extra">
+              <p class="card-description">
+                Segmenting users, fixing value moments, and building loops that
+                made churn drop.
+              </p>
+              <div class="card-tags">
+                <span class="tag">Retention</span>
+                <span class="tag">Lifecycle</span>
+                <span class="tag">Analytics</span>
+              </div>
+              <div class="card-cta">View Case Study ▸</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Extra Consulting Show -->
+        <article class="show-card">
+          <div class="card-poster">
+            <img
+              src="https://static.wixstatic.com/media/742af7_4582e60f2ca845aba47d806e0d390639~mv2.png"
+              alt="Launch Without Drama Poster"
+              class="card-poster-img"
+            >
+            <span class="card-poster-label">Mini-Series • GTM</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Launch Without Drama</h3>
+            <div class="card-body-extra">
+              <p class="card-description">
+                Aligning product, marketing, and sales so launches feel like
+                premieres, not panic.
+              </p>
+              <div class="card-tags">
+                <span class="tag">GTM</span>
+                <span class="tag">Alignment</span>
+              </div>
+              <div class="card-cta">Watch Case ▸</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- BEHIND THE SCENES -->
+    <section class="section" id="behind-the-scenes">
+      <div class="section-header">
+        <h2 class="section-title">Behind the Scenes</h2>
+        <p class="section-subtitle">
+          Frameworks, mental models, and the Ishflix writer’s room.
+        </p>
+      </div>
+
+      <div class="card-row">
+        <article class="show-card">
+          <div class="card-poster">
+            <img
+              src="https://static.wixstatic.com/media/742af7_2fc0aa31f8db42309e04fb8ba530fe36~mv2.png"
+              alt="Blueprints of a PM Poster"
+              class="card-poster-img"
+            >
+            <span class="card-poster-label">BTS • Product Mindset</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Blueprints of a PM</h3>
+            <div class="card-body-extra">
+              <p class="card-description">
+                Operating principles and mental models I reuse across products and
+                teams.
+              </p>
+              <div class="card-tags">
+                <span class="tag">Product Thinking</span>
+                <span class="tag">Frameworks</span>
+              </div>
+              <div class="card-cta">Read Notes ▸</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="show-card">
+          <div class="card-poster">
+            <img
+              src="https://static.wixstatic.com/media/742af7_80bf9cdf9b57476586dc5730895cbbc4~mv2.png"
+              alt="Debugging the Founder Brain Poster"
+              class="card-poster-img"
+            >
+            <span class="card-poster-label">BTS • Founder Brain</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Debugging the Founder Brain</h3>
+            <div class="card-body-extra">
+              <p class="card-description">
+                How I coach decisions under uncertainty without killing momentum.
+              </p>
+              <div class="card-tags">
+                <span class="tag">Coaching</span>
+                <span class="tag">Decisions</span>
+              </div>
+              <div class="card-cta">Open Playbook ▸</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="show-card">
+          <div class="card-poster">
+            <img
+              src="https://static.wixstatic.com/media/742af7_4582e60f2ca845aba47d806e0d390639~mv2.png"
+              alt="The Ishank OS Poster"
+              class="card-poster-img"
+            >
+            <span class="card-poster-label">BTS • Operating System</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">The Ishank OS</h3>
+            <div class="card-body-extra">
+              <p class="card-description">
+                My system for prioritisation, focus, and staying sane while
+                shipping.
+              </p>
+              <div class="card-tags">
+                <span class="tag">Process</span>
+                <span class="tag">Systems</span>
+              </div>
+              <div class="card-cta">View OS ▸</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Coming Soon -->
+        <article class="show-card">
+          <div class="card-poster">
+            <img
+              src="https://static.wixstatic.com/media/742af7_2fc0aa31f8db42309e04fb8ba530fe36~mv2.png"
+              alt="AI Sidekick Experiment Poster"
+              class="card-poster-img"
+            >
+            <span class="card-poster-label">Teaser • Coming Soon</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">The AI Sidekick Experiment</h3>
+            <div class="card-body-extra">
+              <p class="card-description">
+                A sneak peek into how I’m using AI to augment discovery,
+                strategy, and shipping.
+              </p>
+              <div class="card-tags">
+                <span class="tag">AI</span>
+                <span class="tag">Experiments</span>
+              </div>
+              <div class="card-cta">Add to Watchlist ▸</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- PERSONAS -->
+    <section class="section" id="personas">
+      <div class="section-header">
+        <h2 class="section-title">Who Ishflix Is For</h2>
+        <p class="section-subtitle">
+          Log in as the character that matches you best.
+        </p>
+      </div>
+
+      <div class="personas">
+        <!-- Series Binge-Watcher -->
+        <article class="persona-card">
+          <div class="persona-label">Persona • Product Enthusiast</div>
+          <h3 class="persona-title">Series Binge-Watcher</h3>
+          <p class="persona-description">
+            You zoom into flows, ask “why this button here?”, and can happily
+            lose an evening exploring product decisions.
+          </p>
+          <div class="persona-badges">
+            <span class="badge">Powered by Curiosity</span>
+            <span class="badge">Roadmap Nerd</span>
+            <span class="badge">Pixel Inspector</span>
+          </div>
+          <p class="persona-description">
+            Start with <strong>Product Blockbusters</strong> and
+            <strong>Behind the Scenes</strong> to see how the sausage gets
+            made.
+          </p>
+          <div class="persona-actions">
+            <button class="btn btn-primary" data-scroll-to="#product-shows">
+              ▶ Start Binging
+            </button>
+            <button class="btn btn-ghost" data-scroll-to="#behind-the-scenes">
+              See How I Think
+            </button>
+          </div>
+        </article>
+
+        <!-- Strategy Showrunner -->
+        <article class="persona-card">
+          <div class="persona-label">Persona • Consulting Client</div>
+          <h3 class="persona-title">Strategy Showrunner</h3>
+          <p class="persona-description">
+            You care about outcomes, runway, and whether your next “season” is
+            renewal material — with less chaos.
+          </p>
+          <div class="persona-badges">
+            <span class="badge">Storytelling Engine</span>
+            <span class="badge">Data-Driven Drama</span>
+            <span class="badge">Season Renewal Mindset</span>
+          </div>
+          <p class="persona-description">
+            Head to <strong>Consulting Originals</strong> and
+            <strong>Contact</strong> to see what we could build together.
+          </p>
+          <div class="persona-actions">
+            <button class="btn btn-primary" data-scroll-to="#consulting-shows">
+              ▶ Watch Client Stories
+            </button>
+            <button class="btn btn-ghost" data-scroll-to="#contact">
+              Book Your Next Season
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2 class="about-title">About Ishank – Showrunner of Ishflix</h2>
+      <p class="about-body">
+        I’m a product-obsessed builder and consultant who likes to frame work as
+        seasons, episodes, and arcs. Ishflix is my way of showing you not just
+        <em>what</em> shipped, but <em>how</em> it got there — the decisions,
+        tradeoffs, and plot twists in between.
+      </p>
+
+      <div class="career-seasons">
+        <div class="season-card">
+          <div class="season-title">Season 1 • Origin Story</div>
+          <div class="season-desc">
+            Early builds, scrappy MVPs, and learning to ship fast without
+            falling apart.
+          </div>
+        </div>
+        <div class="season-card">
+          <div class="season-title">Season 2 • Product Worlds</div>
+          <div class="season-desc">
+            Leading product in messy environments, shaping UX, and owning
+            outcomes.
+          </div>
+        </div>
+        <div class="season-card">
+          <div class="season-title">Season 3 • Consulting Arc</div>
+          <div class="season-desc">
+            Partnering with founders and teams who want sharper stories and
+            cleaner systems.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2 class="contact-title">Book Your Next Season with Ishflix</h2>
+      <p class="contact-body">
+        Whether you’re here as a <strong>Series Binge-Watcher</strong> or a
+        <strong>Strategy Showrunner</strong>, drop a note and let’s see if we
+        should ship an episode together.
+      </p>
+
+      <form class="contact-form" onsubmit="event.preventDefault(); alert('Thanks! Pretend this sent an email.');">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" placeholder="Your name" />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com" />
+        </div>
+        <div class="field">
+          <label for="company">Company</label>
+          <input id="company" placeholder="Startup / Team / Solo" />
+        </div>
+        <div class="field">
+          <label for="interest">Interest</label>
+          <select id="interest">
+            <option>Product Collaboration</option>
+            <option>Consulting / Advisory</option>
+            <option>Both Product & Consulting</option>
+            <option>Just Saying Hi</option>
+          </select>
+        </div>
+        <div class="field contact-form-full">
+          <label for="message">Message</label>
+          <textarea
+            id="message"
+            rows="4"
+            placeholder="Tell me about your current season, challenges, and what success looks like."
+          ></textarea>
+        </div>
+
+        <div class="contact-actions contact-form-full">
+          <button class="btn btn-primary" type="submit">
+            ▶ Send to Ishflix HQ
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Ishflix • Created by Ishank • All “shows” are real
+    work with cinematic framing.
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-backdrop" id="signInModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Sign in to Ishflix</div>
+        <button class="modal-close" aria-label="Close" data-close-modal>
+          ×
+        </button>
+      </div>
+      <div class="modal-body">
+        Pick the persona that fits you best. This is a playful, no-password
+        sign-in — it’ll just scroll you to the right section.
+      </div>
+      <div class="modal-persona-buttons">
+        <button class="persona-btn" data-scroll-to="#product-shows">
+          <span>Series Binge-Watcher</span>
+          <span>▶</span>
+        </button>
+        <button class="persona-btn" data-scroll-to="#consulting-shows">
+          <span>Strategy Showrunner</span>
+          <span>▶</span>
+        </button>
+      </div>
+      <div class="modal-note">
+        No actual accounts yet — Ishflix is a portfolio experience, not a
+        subscription… for now.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // year in footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // smooth scrolling
+    function smoothScrollTo(target) {
+      if (!target) return;
+      const el = document.querySelector(target);
+      if (!el) return;
+      window.scrollTo({
+        top: el.offsetTop - 70,
+        behavior: "smooth",
+      });
+    }
+
+    document.querySelectorAll("[data-scroll-to]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.getAttribute("data-scroll-to");
+        const modal = document.getElementById("signInModal");
+        if (modal.style.display === "flex") {
+          modal.style.display = "none";
+        }
+        smoothScrollTo(target);
+      });
+    });
+
+    // modal logic
+    const modal = document.getElementById("signInModal");
+    const openModalBtns = document.querySelectorAll("[data-open-modal]");
+    const closeModalBtns = document.querySelectorAll("[data-close-modal]");
+
+    openModalBtns.forEach((btn) =>
+      btn.addEventListener("click", () => {
+        modal.style.display = "flex";
+      })
+    );
+
+    closeModalBtns.forEach((btn) =>
+      btn.addEventListener("click", () => {
+        modal.style.display = "none";
+      })
+    );
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
